@@ -1,18 +1,39 @@
 <html>
   <head>
-    <title>min,mid,max</title>
+    <title>caluclate area</title>
   </head>
   <body>
+    <input type="button"
+	   onclick="calculate()"
+	   value="Calculate Area">
     <script src="vec3.js"></script>
     <script>
-      var x = 5, y = 4, z = 8;
-      var v = new Vec3(x,y,z);
-      document.write("sum:"v.sum())
-      var min = v.min();
-      var max = v.max();
-      var mid = v.mid();
-      document.write("max:" + max + " min:" + min + " mid:" + mid);
-      window.alert("max:" + max + " min:" + min + " mid:" + mid);
+      function AreaOfTriangle(a,b,c)
+      {
+      l1 = Math.sqrt(Math.pow((a.x - b.x),2) + Math.pow((a.y - b.y),2) + Math.pow((a.z - b.z),2));
+      l2 = Math.sqrt(Math.pow((c.x - b.x),2) + Math.pow((c.y - b.y),2) + Math.pow((c.z - b.z),2));
+      l3 = Math.sqrt(Math.pow((a.x - c.x),2) + Math.pow((a.y - c.y),2) + Math.pow((a.z - c.z),2));
+      s = (l1+l2+l3)/2
+      return Math.sqrt(s*(s-l1)*(s-l2)*(s-l3));
+      }
+      var x0 = 0, y0 = 3, z0 = 0;
+      var x1 = 0, y1 = 5, z1 = 0;
+      var x2 = 2, y2 = 0, z2 = 0;
+      var v0 = new Vec3(x0,y0,z0);
+      var v1 = new Vec3(x1,y1,z1);
+      var v2 = new Vec3(x2,y2,z2);
+      a0 = [x0,y0,z0]
+      a1 = [x1,y1,z1]
+      a2 = [x2,y2,z2]
+      document.write("\n");
+      document.write("point1 : ["+ a0 + "] ");
+      document.write("point2 : ["+ a1 + "] ");
+      document.write("point3 : ["+ a2 + "] ");
+      function calculate()
+      {
+      var S = AreaOfTriangle(v0,v1,v2);
+      window.alert("S = " + l1);
+      }
     </script>
   </body>
 </html>
