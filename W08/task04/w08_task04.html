@@ -1,0 +1,89 @@
+<html>
+<head>
+  <title>W08: Example 02</title>
+</head>
+<body>
+  <script src="three.min.js"></script>
+
+  <script type="x-shader/x-vertex" id="phong.vert">
+  varying vec3 point_color;
+    varying vec3 transformedNormal;
+    varying vec3 pointPosition;
+    varying vec3 lightVector;
+    uniform vec3 pointLightPosition;
+
+    void main()
+    {
+
+point_color = color;
+
+      transformedNormal = normalMatrix * normal;
+      pointPosition = (modelViewMatrix * vec4( position, 1.0 )).xyz;
+      vec4 lPosition = viewMatrix * vec4( pointLightPosition, 1.0 );
+      lightVector = lPosition.xyz - pointPosition;
+      gl_Position = projectionMatrix * vec4(pointPosition,1.0);
+    }
+  </script>
+
+  <script type="x-shader/x-fragment" id="phong.frag">
+    varying vec3 point_color;
+    uniform vec3 lightPower;
+    uniform vec3 ambient;
+    uniform vec3 Kd; // surface diffuse color
+    uniform vec3 Ks; // surface specular color: equal to R_F(0)
+    uniform float m; // material roughness (average slope of microfacets)
+    uniform float s; // percentage of incoming light which is specularly reflected
+
+    varying vec3 transformedNormal;
+    varying vec3 pointPosition;
+    varying vec3 lightVector;
+
+    #define PI 3.14159265
+
+
+    float G(float NdotH, float NdotV, float VdotH, float NdotL)
+    {
+      float G1 = 2.0 * NdotH * NdotV / VdotH;
+      float G2 = 2.0 * NdotH * NdotL / VdotH;
+      return min( 1.0, min( G1, G2 ));
+    }
+
+    vec3 R_F(float VdotH) {
+      return Ks + (1.0 - Ks)*pow(1.0-VdotH, 5.0);
+    }
+
+    float Beckmann(float NdotH){
+      float A = 1.0 / (pow(m,2.0)+pow(NdotH,4.0)*PI);
+      float B = exp( - pow( tan(acos(NdotH)) , 2.0) / pow(m,2.0));
+      return A*B;
+    }
+
+    void main()
+{
+    vec3  n = normalize( transformedNormal );
+    vec3  v = normalize( -pointPosition );
+    vec3  l = normalize(  lightVector );
+    vec3  h = normalize( v+l );
+
+    vec3 specular = vec3(0.0, 0.0, 0.0);            
+    float  NdotH = max(0.0, dot( n, h ));
+    float  VdotH = max(0.0, dot( v, h ));
+    float  NdotV = max(0.0, dot( n, v ));
+    float  NdotL = max(0.0, dot( n, l ));
+    if (NdotL > 0.0 && NdotV > 0.0) 
+    {
+        specular = (Beckmann(NdotH) * G(NdotH, NdotV, VdotH, NdotL) * R_F(VdotH)) / ( NdotL* NdotV);
+    }
+    vec3 beta = lightPower / ( 4.0  * PI * pow( length(lightVector),2.0) );
+    gl_FragColor = vec4(beta * NdotL * ((1.0-s)*Kd + s*specular) + ambient*Kd, 1.0);
+}
+
+  </script>
+
+
+  <script src="main.js"></script>
+  <script>
+    main();
+  </script>
+</body>
+</html>

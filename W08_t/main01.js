@@ -23,6 +23,12 @@ function main()
 
     var geometry = new THREE.TorusKnotGeometry( 1, 0.3, 100, 20 );
     var material = new THREE.MeshLambertMaterial();
+      // create a wireframe material        
+    material = new THREE.ShaderMaterial( {
+        vertexColors: THREE.VertexColors,
+    vertexShader: document.getElementById( 'vertexShader' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+} );
 
     var torus_knot = new THREE.Mesh( geometry, material );
     scene.add( torus_knot );
