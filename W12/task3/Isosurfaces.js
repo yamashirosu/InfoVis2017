@@ -134,23 +134,23 @@ function Isosurfaces( volume, isovalue ,light)
         var s0=volume.values[(v0.z*slices)+(v0.y*lines)+v0.x][0];
         var s1=volume.values[(v1.z*slices)+(v1.y*lines)+v1.x][0];
         var v = new THREE.Vector3(v1.x-v0.x,v1.y-v0.y,v1.z-v0.z );
-        var matthew;
+        var vb;
         var l ;
         if(s0<s1){
 
             l=s1-s0;
-            matthew=(s-s0)/l;
+            vb=(s-s0)/l;
 
         }else{
 
             l=s0-s1;
-            matthew=1 - ((s-s1)/l);
+            vb=1 - ((s-s1)/l);
 
         }
-        //console.log(parseInt(1/matthew));
-        v.x = v0.x+v.x*matthew;
-        v.y = v0.y+v.y*matthew;
-        v.z = v0.z+v.z*matthew;
+        //console.log(parseInt(1/vb));
+        v.x = v0.x+v.x*vb;
+        v.y = v0.y+v.y*vb;
+        v.z = v0.z+v.z*vb;
         return v;
 
     }
