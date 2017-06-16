@@ -1,0 +1,67 @@
+<html>
+    <head>
+	<title>LAST_KADAI</title>
+    </head>
+    <body style="margin:0">
+	<script src="three.min.js"></script>
+	<script src="Lut.js"></script>
+	<script src="TrackballControls.js"></script>
+	<script src="KVS.min.js"></script>
+	<script src="KVS2THREE.min.js"></script>
+	<script src="KVSLobsterData.js"></script>
+	<script src="Bounds.js"></script>
+	<script src="Isosurfaces.js"></script>
+	<script src="last_kadai.js"></script>
+
+        <div id="controller" style="width:20%; float:right;">
+
+	  <label id="label" style="font-family:Arial;"></label>
+	<!--  <div><b>○出力の変更</b></div>
+              <input type="range" min="0" max="100" step="0.01" value="0.01" id="speed"/>-->
+	<div><b><font color="black" size="3">ロブスター射出器</font></b></div>
+        <div><b><font color="black" size="2">射出して加速して反転してタイミングよくstopして箱の中でとめてみよう!!</font></b></div>
+
+        <br>
+	<br>
+        
+	<div><b>○リセット</b></div>       
+	<button id="robster_reset_button" style="font-family=Arial;">初期化</button>
+
+        <br>
+	<br>
+	<div><b>○射出</b></div>
+	<button id="robster_out_button" style="font-family=Arial;">全速前進!!</button>
+	<br>
+        <br>
+        <div><b>○停止ボタン</b></div>
+	<button id="robster_stop_button" style="font-family=Arial;">STOP</button>
+
+        <br>
+        <br>
+	<div><b>○加速ボタン</b></div>
+	<button id="robster_up_button" style="font-family=Arial;">UP</button>
+	<br>
+        <br>
+        <div><b>○減速ボタン</b></div>
+	<button id="robster_reverse_button" style="font-family=Arial;">DOWN</button>
+	<br>
+        <br>
+        <div><b>○向き反転</b></div>
+	<button id="robster_vec_button" style="font-family=Arial;">vec</button>
+
+	</div>
+        <div id="display" style="width: 80%; float: left;">
+	<br>
+        <br>
+
+	</div>
+        <!--<div id="controller" style="width:20%; float:right;">
+        <label id="label" style="font-family:Arial;"></label>
+        <input type="range" min="0" max="256" step="1" value="128" id="isovalue"/>
+        <button id="change-isovalue-button" style="font-family=Arial;"> Apply</button>
+        -->
+	<script>
+	 main();
+	</script>
+    </body>
+</html>
